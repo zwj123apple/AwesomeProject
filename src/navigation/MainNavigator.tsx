@@ -7,6 +7,7 @@ import HomeScreen from '../screens/Dashboard/DashboardScreen.tsx';
 import CommunityScreen from '../screens/Products/ProductListScreen.tsx';
 import ProfileScreen from '../screens/Profile/ProfileScreen.tsx';
 import TransactionScreen from '../screens/Transaction/TransactionScreen';
+import AssetAnalysisScreen from '../screens/AssetAnalysis/AssetAnalysisScreen';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -26,6 +27,11 @@ const HomeStack = () => {
         name={ROUTES.TRANSACTION} 
         component={TransactionScreen} 
         options={{ title: '交易记录' }}
+      />
+      <Stack.Screen 
+        name={ROUTES.ASSET_ANALYSIS} 
+        component={AssetAnalysisScreen} 
+        options={{ title: '资产分析' }}
       />
     </Stack.Navigator>
   );

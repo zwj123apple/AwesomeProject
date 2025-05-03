@@ -4,11 +4,13 @@ import { useAuth } from '../../hooks/useAuth';
 import Button from '../../components/common/Button';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { ROUTES, RootStackParamList } from '../../navigation/routes';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const DashboardScreen = () => {
   const { user, logout } = useAuth();
-  type HomeNavigationProp = NavigationProp<RootStackParamList, 'HomeScreen'>;
-  const navigation = useNavigation<HomeNavigationProp>();
+  // 使用StackNavigationProp而不是NavigationProp以获得更精确的类型检查
+  type DashboardNavigationProp = StackNavigationProp<RootStackParamList>;
+  const navigation = useNavigation<DashboardNavigationProp>();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -28,10 +30,18 @@ const DashboardScreen = () => {
         
         <TouchableOpacity 
           style={styles.card}
-          onPress={() => navigation.navigate('HomeScreen', { screen: 'Transaction' })}
+          onPress={() => navigation.navigate('Transaction')}
         >
           <Text style={styles.cardTitle}>交易记录</Text>
           <Text style={styles.cardText}>查看您的所有交易记录</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.card}
+          onPress={() => navigation.navigate('AssetAnalysis')}
+        >
+          <Text style={styles.cardTitle}>资产分析</Text>
+          <Text style={styles.cardText}>查看您的资产分布和趋势分析</Text>
         </TouchableOpacity>
         
         {user && (
