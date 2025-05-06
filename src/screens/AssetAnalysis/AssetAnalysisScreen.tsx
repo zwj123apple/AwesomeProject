@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, SafeAreaView, ScrollView, View, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, ScrollView, View, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChartContainer, AssetLineChart, AssetBarChart, AssetPieChart } from '../../components/charts/ChartComponents';
 import { 
   getAssetTrendData, 
@@ -23,7 +24,7 @@ const AssetAnalysisScreen = () => {
   const tabTitle = activeTab === 'amount' ? '交易金额' : '交易次数';
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>资产分析</Text>
         <Text style={styles.subtitle}>查看您的资产分布和趋势</Text>
@@ -53,7 +54,6 @@ const AssetAnalysisScreen = () => {
             gradientFromOpacity={0.6}
             gradientToOpacity={0.1}
             chartColor={activeTab === 'amount' ? '#007AFF' : '#4CAF50'}
-            yAxisPosition={activeTab === 'count' ? 'right' : 'left'}
           />
         </ChartContainer>
         

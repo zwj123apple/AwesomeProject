@@ -8,6 +8,7 @@ import CommunityScreen from '../screens/Products/ProductListScreen.tsx';
 import ProfileScreen from '../screens/Profile/ProfileScreen.tsx';
 import TransactionScreen from '../screens/Transaction/TransactionScreen';
 import AssetAnalysisScreen from '../screens/AssetAnalysis/AssetAnalysisScreen';
+import IncomeAnalysisScreen from '../screens/IncomeAnalysis/IncomeAnalysisScreen';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -17,21 +18,49 @@ const Stack = createStackNavigator();
 // 首页堆栈导航
 const HomeStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerBackButtonDisplayMode: 'minimal',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#FFFFFF',
+          elevation: 0, // 安卓去除阴影
+          shadowOpacity: 0, // iOS去除阴影
+        },
+        headerTintColor: '#007AFF',
+      }}
+    >
       <Stack.Screen 
         name="HomeScreen" 
         component={HomeScreen} 
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: true,
+          title: '首页'
+        }}
       />
       <Stack.Screen 
         name={ROUTES.TRANSACTION} 
         component={TransactionScreen} 
-        options={{ title: '交易记录' }}
+        options={{
+          title: '交易记录',
+          headerShown: true,
+        }}
       />
       <Stack.Screen 
         name={ROUTES.ASSET_ANALYSIS} 
         component={AssetAnalysisScreen} 
-        options={{ title: '资产分析' }}
+        options={{
+          title: '资产分析',
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen 
+        name={ROUTES.INCOME_ANALYSIS} 
+        component={IncomeAnalysisScreen} 
+        options={{
+          title: '收益分析',
+          headerShown: true,
+        }}
       />
     </Stack.Navigator>
   );
@@ -57,7 +86,7 @@ const MainNavigator = () => {
       screenOptions={{
         tabBarActiveTintColor: '#007AFF',
         tabBarInactiveTintColor: '#8E8E93',
-        headerShown: true,
+        headerShown: false, // 默认隐藏Tab导航的头部
       }}
     >
       <Tab.Screen 
@@ -65,6 +94,7 @@ const MainNavigator = () => {
         component={HomeStack} 
         options={{
           title: '首页',
+          headerShown: false, // 使用Stack导航的头部而不是Tab导航的头部
         }}
       />
       <Tab.Screen 
@@ -72,6 +102,8 @@ const MainNavigator = () => {
         component={CommunityScreen}
         options={{
           title: '社区',
+          headerShown: true, // 显示社区页面的头部
+          headerTitleAlign: 'center', // 确保标题居中显示
         }}
         listeners={({ navigation }) => ({
           tabPress: (e) => {
@@ -86,6 +118,8 @@ const MainNavigator = () => {
         component={ProfileScreen}
         options={{
           title: '我的',
+          headerShown: true, // 显示个人资料页面的头部
+          headerTitleAlign: 'center', // 确保标题居中显示
         }}
         listeners={({ navigation }) => ({
           tabPress: (e) => {

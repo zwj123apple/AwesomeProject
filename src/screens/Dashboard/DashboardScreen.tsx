@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform, StatusBar } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../../hooks/useAuth';
 import Button from '../../components/common/Button';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
@@ -13,7 +14,7 @@ const DashboardScreen = () => {
   const navigation = useNavigation<DashboardNavigationProp>();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>首页</Text>
         <Text style={styles.subtitle}>欢迎使用我们的应用</Text>
@@ -44,6 +45,14 @@ const DashboardScreen = () => {
           <Text style={styles.cardText}>查看您的资产分布和趋势分析</Text>
         </TouchableOpacity>
         
+        <TouchableOpacity 
+          style={styles.card}
+          onPress={() => navigation.navigate('IncomeAnalysis')}
+        >
+          <Text style={styles.cardTitle}>收益分析</Text>
+          <Text style={styles.cardText}>查看您的产品收益情况和趋势</Text>
+        </TouchableOpacity>
+        
         {user && (
           <View style={styles.userSection}>
             <Text style={styles.welcomeText}>欢迎您，{user.name}</Text>
@@ -64,9 +73,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8F8F8',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   content: {
     padding: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
   title: {
     fontSize: 24,
@@ -89,6 +102,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+    width: '100%',
+    maxWidth: 500,
   },
   cardTitle: {
     fontSize: 18,
@@ -107,6 +122,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
+    width: '100%',
+    maxWidth: 500,
   },
   welcomeText: {
     fontSize: 16,

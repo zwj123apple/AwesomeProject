@@ -3,6 +3,7 @@ export type RootStackParamList = {
   HomeScreen: { screen?: string };
   Transaction: undefined;
   AssetAnalysis: undefined;
+  IncomeAnalysis: undefined;
   Auth: undefined;
   Login: undefined;
   Register: undefined;
@@ -27,4 +28,5 @@ export const ROUTES = {
   // 功能页面
   TRANSACTION: 'Transaction',
   ASSET_ANALYSIS: 'AssetAnalysis',
+  INCOME_ANALYSIS: 'IncomeAnalysis',
 };

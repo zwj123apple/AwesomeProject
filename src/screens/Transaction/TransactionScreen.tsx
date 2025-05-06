@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import transactionService from '../../services/transaction.service';
+import * as transactionApi from '../../api/modules/transaction';
 import Button from '../../components/common/Button';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -32,7 +33,7 @@ const TransactionScreen = () => {
   const fetchTransactions = async (start?: string, end?: string) => {
     setLoading(true);
     try {
-      const response = await transactionService.getTransactions(start, end);
+      const response = await transactionApi.getTransactions(start, end);
       if (response.success) {
         setTransactions(response.data);
       } else {
@@ -102,7 +103,7 @@ const TransactionScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <View style={styles.header}>
         <Text style={styles.title}>交易记录</Text>
       </View>

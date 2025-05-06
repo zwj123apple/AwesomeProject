@@ -3,8 +3,8 @@
  */
 
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './slices/userSlice.tsx';
-import uiReducer from './slices/uiSlice.tsx';
+import userReducer from './slices/userSlice.ts';
+import uiReducer from './slices/uiSlice.ts';
 
 export const store = configureStore({
   reducer: {

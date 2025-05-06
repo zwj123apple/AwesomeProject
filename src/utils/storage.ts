@@ -82,6 +82,7 @@ export const getAllKeys = async (): Promise<string[]> => {
 // 常用存储键
 export const STORAGE_KEYS = {
   AUTH_TOKEN: 'auth_token',
+  REFRESH_TOKEN: 'refresh_token',
   USER_INFO: 'user_info',
   THEME: 'theme',
   LANGUAGE: 'language',

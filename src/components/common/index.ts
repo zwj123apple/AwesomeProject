@@ -6,3 +6,4 @@ export { default as List } from './List';
 export { default as ErrorMessage } from './ErrorMessage';
 export { default as Modal } from './Modal';
 export { default as ErrorModal } from './ErrorModal';
+export { default as GlobalErrorHandler } from './GlobalErrorHandler';

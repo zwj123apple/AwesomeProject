@@ -56,6 +56,7 @@ export const AssetLineChart: React.FC<LineChartProps> = ({
   gradientTo = '#FFFFFF',
   gradientFromOpacity = 0.6,
   gradientToOpacity = 0.1,
+  // 接受从父组件传入的Y轴位置参数
   yAxisPosition = 'left',
   chartColor = '#007AFF'
 }) => {
@@ -79,9 +80,13 @@ export const AssetLineChart: React.FC<LineChartProps> = ({
     fillShadowGradient: withGradient ? gradientFrom : 'transparent',
     fillShadowGradientOpacity: gradientFromOpacity,
     fillShadowGradientTo: withGradient ? gradientTo : 'transparent',
-    fillShadowGradientToOpacity: gradientToOpacity,
-    // 使用alignmentX属性来控制Y轴位置
-    alignmentX: yAxisPosition === 'right' ? 'right' : 'left'
+    fillShadowGradientToOpacity: gradientToOpacity
+    // 移除Y轴位置控制，使用默认的左侧Y轴
+  };
+  
+  // 使用默认样式，不再根据Y轴位置调整
+  const customStyle = {
+    ...styles.chart
   };
 
   return (
@@ -91,7 +96,7 @@ export const AssetLineChart: React.FC<LineChartProps> = ({
       height={height}
       chartConfig={chartConfig}
       bezier={bezier}
-      style={styles.chart}
+      style={customStyle}
       yAxisLabel={yAxisLabel}
       yAxisSuffix={yAxisSuffix}
       withInnerLines={withInnerLines}
@@ -100,6 +105,8 @@ export const AssetLineChart: React.FC<LineChartProps> = ({
       withHorizontalLines={withHorizontalLines}
       withShadow={withShadow}
       withScrollableDot={withScrollableDot}
+      yAxisInterval={1}
+      fromZero={true}
     />
   );
 };
@@ -116,7 +123,7 @@ interface BarChartProps {
 export const AssetBarChart: React.FC<BarChartProps> = ({ 
   data, 
   height = 220, 
-  verticalLabelRotation = 30,
+  verticalLabelRotation = 0, // 设置为0，使X轴标签正常显示，不倾斜
   yAxisLabel = '',
   yAxisSuffix = '',
   barColor = '#4CAF50' // 默认绿色

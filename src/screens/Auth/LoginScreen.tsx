@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../../hooks/useAuth';
 import { Input, Button, ErrorMessage, Modal, ErrorModal } from '../../components/common';
 import { ROUTES } from '../../navigation/routes';
@@ -62,7 +63,7 @@ const LoginScreen = ({ navigation }: any) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <View style={styles.content}>
         <Text style={styles.title}>欢迎回来</Text>
         <Text style={styles.subtitle}>请登录您的账号</Text>
