@@ -9,6 +9,8 @@ export type RootStackParamList = {
   Register: undefined;
   Community: undefined;
   Profile: undefined;
+  UserInfo: undefined;
+  Portfolio: undefined;
   // ... 其他屏幕
 };
 export const ROUTES = {
@@ -29,4 +31,8 @@ export const ROUTES = {
   TRANSACTION: 'Transaction',
   ASSET_ANALYSIS: 'AssetAnalysis',
   INCOME_ANALYSIS: 'IncomeAnalysis',
+  
+  // 个人中心二级页面
+  USER_INFO: 'UserInfo',
+  PORTFOLIO: 'Portfolio',
 };

@@ -36,7 +36,7 @@ export const refreshToken = async (): Promise<string | null> => {
   try {
     // 如果已经在刷新中，则等待刷新完成
     if (isRefreshing) {
-      return new Promise(resolve => {
+      return new Promise<string | null>(resolve => {
         subscribeTokenRefresh(token => {
           resolve(token);
         });
@@ -48,11 +48,14 @@ export const refreshToken = async (): Promise<string | null> => {
     // 获取刷新令牌
     const refreshToken = await getData(STORAGE_KEYS.REFRESH_TOKEN);
     if (!refreshToken) {
-      throw new Error('刷新令牌不存在');
+      // 首次启动时可能没有刷新令牌，不抛出错误，而是返回null
+      console.log('刷新令牌不存在，可能是首次启动');
+      isRefreshing = false;
+      return null;
     }
     
     // 调用刷新令牌API
-    const response = await mockApi.refreshToken(refreshToken);
+    const response = await mockApi.refreshToken(refreshToken as string);
     
     if (!response.success || !response.data.token) {
       throw new Error(response.error?.message || '刷新令牌失败');
@@ -101,7 +104,7 @@ export const isTokenValid = async (): Promise<boolean> => {
     if (!token) return false;
     
     // 验证令牌
-    const response = await mockApi.validateToken(token);
+    const response = await mockApi.validateToken(token as string);
     
     // 如果令牌即将过期（小于5分钟），主动刷新令牌
     // 这样可以减少用户遇到登录过期提示的频率

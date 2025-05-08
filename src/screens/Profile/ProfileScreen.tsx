@@ -1,15 +1,27 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../../hooks/useAuth';
 import Button from '../../components/common/Button';
+import { useNavigation } from '@react-navigation/native';
+// 修改导入方式，解决TypeScript类型错误
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const ProfileScreen = ({ navigation }: any) => {
+const ProfileScreen = () => {
+  const navigation = useNavigation();
   const { user, logout } = useAuth();
 
   const handleLogout = async () => {
     await logout();
     // 登出后会自动通过导航系统重定向到登录页面
+  };
+
+  const navigateToUserInfo = () => {
+    navigation.navigate('UserInfo' as never);
+  };
+
+  const navigateToPortfolio = () => {
+    navigation.navigate('Portfolio' as never);
   };
 
   if (!user) {
@@ -34,6 +46,31 @@ const ProfileScreen = ({ navigation }: any) => {
           </View>
           <Text style={styles.userName}>{user.name}</Text>
           <Text style={styles.userInfo}>用户ID: {user.id}</Text>
+        </View>
+
+        {/* 二级导航 */}
+        <View style={styles.navigationContainer}>
+          <TouchableOpacity 
+            style={styles.navigationItem} 
+            onPress={navigateToUserInfo}
+          >
+            <View style={styles.navigationIconContainer}>
+              <MaterialIcons name="person" size={24} color="#007AFF" />
+            </View>
+            <Text style={styles.navigationText}>个人信息</Text>
+            <MaterialIcons name="chevron-right" size={24} color="#8E8E93" />
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.navigationItem} 
+            onPress={navigateToPortfolio}
+          >
+            <View style={styles.navigationIconContainer}>
+              <MaterialIcons name="account-balance-wallet" size={24} color="#007AFF" />
+            </View>
+            <Text style={styles.navigationText}>持仓列表</Text>
+            <MaterialIcons name="chevron-right" size={24} color="#8E8E93" />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.section}>
@@ -72,6 +109,37 @@ const ProfileScreen = ({ navigation }: any) => {
 };
 
 const styles = StyleSheet.create({
+  navigationContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    marginBottom: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  navigationItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+  },
+  navigationIconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#F0F8FF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  navigationText: {
+    flex: 1,
+    fontSize: 16,
+    color: '#000000',
+  },
   container: {
     flex: 1,
     backgroundColor: '#F8F8F8',

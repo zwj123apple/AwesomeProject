@@ -63,17 +63,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           }
         } else {
           // 令牌无效，尝试刷新
-          const newToken = await refreshToken();
-          if (newToken) {
-            // 刷新成功，获取用户信息
-            const response = await mockApi.getCurrentUser(newToken);
-            if (response.success && response.data.user) {
-              setUser(response.data.user);
-              await storeData(STORAGE_KEYS.USER_INFO, JSON.stringify(response.data.user));
-              setIsAuthenticated(true);
+          try {
+            const newToken = await refreshToken();
+            if (newToken) {
+              // 刷新成功，获取用户信息
+              const response = await mockApi.getCurrentUser(newToken);
+              if (response.success && response.data.user) {
+                setUser(response.data.user);
+                await storeData(STORAGE_KEYS.USER_INFO, JSON.stringify(response.data.user));
+                setIsAuthenticated(true);
+              }
+            } else {
+              // 刷新失败或首次启动没有令牌，需要重新登录
+              await clearTokens();
+              setUser(null);
+              setIsAuthenticated(false);
             }
-          } else {
-            // 刷新失败，需要重新登录
+          } catch (refreshError) {
+            console.error('刷新令牌出错', refreshError);
             await clearTokens();
             setUser(null);
             setIsAuthenticated(false);

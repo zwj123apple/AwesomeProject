@@ -13,7 +13,7 @@ const STORAGE_PREFIX = '@AwesomeApp:';
  * @param key 键名
  * @param value 要存储的值
  */
-export const storeData = async <T>(key: string, value: T): Promise<void> => {
+export const storeData = async <T>(key: string, value: T | null): Promise<void> => {
   try {
     const jsonValue = JSON.stringify(value);
     await AsyncStorage.setItem(`${STORAGE_PREFIX}${key}`, jsonValue);
